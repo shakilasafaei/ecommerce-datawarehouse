@@ -110,7 +110,7 @@ erDiagram
 <details>
 <summary>Rendered EER diagram from MySQL Workbench</summary>
 
-![Star schema](docs/star_schema.png)
+![Star schema](star_schema.png)
 
 </details>
 
@@ -203,8 +203,7 @@ City names were normalised (lowercase, trimmed) and empty strings converted to
 ├── 04_schema_etoile.sql         # Star schema DDL
 ├── 05_chargement_elt.sql        # Dimension and fact loads
 ├── 06_requetes_analytiques.sql  # Analytical queries
-└── docs/
-    └── star_schema.png          # EER diagram
+└── star_schema.png              # EER diagram
 ```
 
 ## Getting started
