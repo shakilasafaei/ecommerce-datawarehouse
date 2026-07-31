@@ -49,7 +49,7 @@ This is an **ELT** pattern, not ETL: raw files land untouched, and all cleaning,
 key generation and conformance logic runs as SQL inside the database. That keeps
 transformations version-controlled, testable, and re-runnable.
 
-## Star schema
+## Star-schema
 
 ```mermaid
 erDiagram
@@ -110,7 +110,7 @@ erDiagram
 <details>
 <summary>Rendered EER diagram from MySQL Workbench</summary>
 
-![Star schema](star_schema.png)
+![Star-schema](star-schema.png)
 
 </details>
 
@@ -203,7 +203,7 @@ City names were normalised (lowercase, trimmed) and empty strings converted to
 ├── 04_schema_etoile.sql         # Star schema DDL
 ├── 05_chargement_elt.sql        # Dimension and fact loads
 ├── 06_requetes_analytiques.sql  # Analytical queries
-└── star_schema.png              # EER diagram
+└── star-schema.png              # EER diagram
 ```
 
 ## Getting started
