@@ -1,7 +1,7 @@
 # E-Commerce Data Warehouse — Star Schema & ELT Pipeline
 
 A dimensional data warehouse built on MySQL from raw Brazilian e-commerce data:
-9 CSV files → staging layer → quality profiling → star schema → analytical SQL.
+9 CSV files → staging layer → quality profiling → star-schema → analytical SQL.
 
 **112,650 fact rows · 6 dimensions · 15.8M BRL of transactions modelled**
 
@@ -13,17 +13,22 @@ A dimensional data warehouse built on MySQL from raw Brazilian e-commerce data:
 flowchart TD
     A["9 raw CSV files<br/>Olist · Kaggle · ~530k rows"]
 
-    B["<b>01</b> — Staging DDL<br/>8 landing tables · permissive types · no constraints"]
+    B["<b>01</b> — Staging DDL<br/>8 landing tables · permissive types"]
     C["<b>02</b> — Extract<br/>LOAD DATA INFILE · source fidelity preserved"]
-    D["<b>03</b> — Profile and clean<br/>duplicates · orphans · nulls · 610 products recategorised"]
-    E["<b>04</b> — Star schema DDL<br/>1 fact table + 6 dimensions · surrogate keys · enforced FKs"]
+    D["<b>03</b> — Profile and clean<br/>duplicates · orphans · nulls · 610 recategorised"]
+    E["<b>04</b> — Star-schema DDL<br/>1 fact + 6 dimensions · surrogate keys · FKs"]
     F["<b>05</b> — Transform and load<br/>dimensions first, then 112,650 fact rows"]
     G["<b>06</b> — Analyse<br/>window functions · growth · delivery · satisfaction"]
 
     A --> B --> C --> D --> E --> F --> G
 
-    style A fill:#f5f5f5,stroke:#999
-    style G fill:#e8f5e9,stroke:#4caf50
+    classDef source fill:#37474f,stroke:#78909c,stroke-width:2px,color:#eceff1
+    classDef stage  fill:#1a3a52,stroke:#4a90d9,stroke-width:2px,color:#e3f2fd
+    classDef result fill:#1b3d2f,stroke:#4caf50,stroke-width:2px,color:#e8f5e9
+
+    class A source
+    class B,C,D,E,F stage
+    class G result
 ```
 
 Each stage is one numbered SQL script in this repository. They are designed to be
@@ -35,15 +40,25 @@ run in order against a clean MySQL instance.
 flowchart LR
     CSV["Raw CSV"] -->|extract| STG[("stg_ecommerce<br/>staging layer")]
     STG -->|profile| QC{"Quality<br/>gates"}
-    QC -->|pass| DWH[("dwh_ecommerce<br/>star schema")]
+    QC -->|pass| DWH[("dwh_ecommerce<br/>star-schema")]
     QC -->|reject| LOG["Documented<br/>anomalies"]
     DWH --> SQL["Analytical SQL"]
+
+    classDef raw   fill:#37474f,stroke:#78909c,stroke-width:2px,color:#eceff1
+    classDef store fill:#1a3a52,stroke:#4a90d9,stroke-width:2px,color:#e3f2fd
+    classDef gate  fill:#3d3419,stroke:#d4a72c,stroke-width:2px,color:#fff8e1
+    classDef out   fill:#1b3d2f,stroke:#4caf50,stroke-width:2px,color:#e8f5e9
+
+    class CSV,LOG raw
+    class STG,DWH store
+    class QC gate
+    class SQL out
 ```
 
 | Layer | Purpose |
 |---|---|
 | `stg_ecommerce` | Raw landing zone. Permissive types, no constraints, source fidelity preserved |
-| `dwh_ecommerce` | Conformed star schema. Surrogate keys, enforced FKs, business-ready |
+| `dwh_ecommerce` | Conformed star-schema. Surrogate keys, enforced FKs, business-ready |
 
 This is an **ELT** pattern, not ETL: raw files land untouched, and all cleaning,
 key generation and conformance logic runs as SQL inside the database. That keeps
@@ -110,7 +125,7 @@ erDiagram
 <details>
 <summary>Rendered EER diagram from MySQL Workbench</summary>
 
-![Star-schema](star-schema.png)
+![Star-schema](docs/star-schema.png)
 
 </details>
 
@@ -200,10 +215,11 @@ City names were normalised (lowercase, trimmed) and empty strings converted to
 ├── 01_staging_tables.sql        # Databases + raw landing tables
 ├── 02_chargement_csv.sql        # CSV ingestion via LOAD DATA INFILE
 ├── 03_controle_qualite.sql      # Profiling queries + cleaning
-├── 04_schema_etoile.sql         # Star schema DDL
+├── 04_schema_etoile.sql         # Star-schema DDL
 ├── 05_chargement_elt.sql        # Dimension and fact loads
 ├── 06_requetes_analytiques.sql  # Analytical queries
-└── star-schema.png              # EER diagram
+└── docs/
+    └── star-schema.png          # EER diagram
 ```
 
 ## Getting started
