@@ -16,7 +16,7 @@ flowchart TD
     B["<b>01</b> — Staging DDL<br/>8 landing tables · permissive types"]
     C["<b>02</b> — Extract<br/>LOAD DATA INFILE · source fidelity preserved"]
     D["<b>03</b> — Profile and clean<br/>duplicates · orphans · nulls · 610 recategorised"]
-    E["<b>04</b> — Star-schema DDL<br/>1 fact + 6 dimensions · surrogate keys · FKs"]
+    E["<b>04</b> — star-schema DDL<br/>1 fact + 6 dimensions · surrogate keys · FKs"]
     F["<b>05</b> — Transform and load<br/>dimensions first, then 112,650 fact rows"]
     G["<b>06</b> — Analyse<br/>window functions · growth · delivery · satisfaction"]
 
@@ -64,7 +64,7 @@ This is an **ELT** pattern, not ETL: raw files land untouched, and all cleaning,
 key generation and conformance logic runs as SQL inside the database. That keeps
 transformations version-controlled, testable, and re-runnable.
 
-## Star-schema
+## star-schema
 
 ```mermaid
 erDiagram
@@ -125,7 +125,7 @@ erDiagram
 <details>
 <summary>Rendered EER diagram from MySQL Workbench</summary>
 
-![Star-schema](docs/star-schema.png)
+![star-schema](docs/star-schema.png)
 
 </details>
 
@@ -215,7 +215,7 @@ City names were normalised (lowercase, trimmed) and empty strings converted to
 ├── 01_staging_tables.sql        # Databases + raw landing tables
 ├── 02_chargement_csv.sql        # CSV ingestion via LOAD DATA INFILE
 ├── 03_controle_qualite.sql      # Profiling queries + cleaning
-├── 04_schema_etoile.sql         # Star-schema DDL
+├── 04_schema_etoile.sql         # star-schema DDL
 ├── 05_chargement_elt.sql        # Dimension and fact loads
 ├── 06_requetes_analytiques.sql  # Analytical queries
 └── docs/
