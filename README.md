@@ -1,4 +1,4 @@
-# E-Commerce Data Warehouse — Star Schema & ELT Pipeline
+# E-Commerce Data Warehouse — Star-Schema & ELT Pipeline
 
 A dimensional data warehouse built on MySQL from raw Brazilian e-commerce data:
 9 CSV files → staging layer → quality profiling → star-schema → analytical SQL.
@@ -125,7 +125,7 @@ erDiagram
 <details>
 <summary>Rendered EER diagram from MySQL Workbench</summary>
 
-![star-schema](docs/star-schema.png)
+![star-schema](star-schema.png)
 
 </details>
 
@@ -218,8 +218,7 @@ City names were normalised (lowercase, trimmed) and empty strings converted to
 ├── 04_schema_etoile.sql         # star-schema DDL
 ├── 05_chargement_elt.sql        # Dimension and fact loads
 ├── 06_requetes_analytiques.sql  # Analytical queries
-└── docs/
-    └── star-schema.png          # EER diagram
+└── star-schema.png              # EER diagram
 ```
 
 ## Getting started
